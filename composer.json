@@ -1,0 +1,31 @@
+{
+  "name": "hasanparasteh/reactphp",
+  "description": "A starter template for reactphp projects",
+  "license": "MIT",
+  "require": {
+    "react/http": "^1.6.0",
+    "nikic/fast-route": "^1.3.0",
+    "react/mysql": "^0.5.6",
+    "vlucas/phpdotenv": "^5.4.1",
+    "firebase/php-jwt": "^6.0.0",
+    "clue/redis-react": "^2.5.0",
+    "nikolaposa/rate-limit": "^3.0.0",
+    "ext-redis": "*",
+    "ext-json": "*",
+    "ext-curl": "*",
+    "ext-intl": "*",
+    "clue/block-react": "^1.5.0",
+    "clue/socks-react": "^1.3.0",
+    "christoph-kluge/reactphp-http-cors-middleware": "^2.0.0",
+    "opis/json-schema": "^2.3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "src",
+      "Tests\\": "tests"
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.5.16"
+  }
+}
