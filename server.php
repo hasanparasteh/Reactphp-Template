@@ -41,7 +41,7 @@ $DB_HOST = $_ENV['DB_HOST'];
 //];
 //
 //// Final Databases
-//$appManagerDatabase = new DatabaseHelper($databaseConnections['app']);
+//$appManagerDatabase = new \Saraf\SOrm\SOrm($databaseConnections['app']);
 
 // Routes
 $routes = new RouteCollector(new Std(), new GroupCountBased());
