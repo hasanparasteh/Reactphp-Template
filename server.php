@@ -23,25 +23,45 @@ $loop = React\EventLoop\Loop::get();
 $env = Dotenv::createImmutable(__DIR__);
 $env->load();
 
-// Factories
-$databaseFactory = new Factory($loop);
+$redisFactory = new Clue\React\Redis\Factory();
+
 
 $DB_USER = $_ENV['DB_USER'];
 $DB_PASS = $_ENV['DB_PASS'];
 $DB_HOST = $_ENV['DB_HOST'];
 
-//// Database Uri`s
-//$databaseUri = [
-//    'app' => $DB_USER . ':' . $DB_PASS . '@' . $DB_HOST . '/' . "app",
-//];
-//
-//// Database Connections
-//$databaseConnections = [
-//    'app' => $databaseFactory->createLazyConnection($databaseUri['app']),
-//];
-//
-//// Final Databases
-//$appManagerDatabase = new \Saraf\SOrm\SOrm($databaseConnections['app']);
+$REDIS_HOST = $_ENV['REDIS_HOST'];
+$REDIS_PORT = $_ENV['REDIS_PORT'];
+@$REDIS_PASS = $_ENV['REDIS_PASSWORD'];
+
+$redisConnection = $redisFactory->createLazyClient(
+    empty($REDIS_PASS)
+        ? sprintf("redis://%s:%s", $REDIS_HOST, $REDIS_PORT)
+        : sprintf("redis://%s:%s?password=%s", $REDIS_HOST, $REDIS_PORT, $REDIS_PASS)
+);
+
+// Basic Redis
+$redisServer = new Redis();
+$redisServer->connect($REDIS_HOST, $REDIS_PORT);
+if (!empty($REDIS_PASS))
+    $redisServer->auth(['pass' => $REDIS_PASS]);
+
+// Factories
+$databaseFactory = new Factory($loop);
+
+// Database Uri`s
+$databaseUri = [
+    'app' => $DB_USER . ':' . $DB_PASS . '@' . $DB_HOST . '/' . "app",
+];
+
+// Database Connections
+$databaseConnections = [
+    'app' => $databaseFactory->createLazyConnection($databaseUri['app']),
+];
+
+// Final Databases
+$appManagerDatabase = new \App\Helpers\DatabaseHelper($databaseConnections['app']);
+
 
 // Routes
 $routes = new RouteCollector(new Std(), new GroupCountBased());

@@ -6,18 +6,18 @@
     "react/http": "^1.6.0",
     "nikic/fast-route": "^1.3.0",
     "vlucas/phpdotenv": "^5.4.1",
-    "firebase/php-jwt": "^6.0.0",
-    "clue/redis-react": "^2.5.0",
+    "firebase/php-jwt": "^6.3.0",
+    "clue/redis-react": "^2.6.0",
     "nikolaposa/rate-limit": "^3.0.0",
     "ext-redis": "*",
     "ext-json": "*",
     "ext-curl": "*",
     "ext-intl": "*",
     "clue/block-react": "^1.5.0",
-    "clue/socks-react": "^1.3.0",
+    "clue/socks-react": "^1.4.0",
     "christoph-kluge/reactphp-http-cors-middleware": "^2.0.0",
     "opis/json-schema": "^2.3.0",
-    "saraf/s-orm": "^0.0.1"
+    "react/mysql": "^0.5.6"
   },
   "autoload": {
     "psr-4": {
