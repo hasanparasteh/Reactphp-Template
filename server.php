@@ -5,6 +5,7 @@ use App\Core\ErrorHandler;
 use App\Core\JsonRequestDecoder;
 use App\Core\Router;
 use App\Helpers\JwtHelper;
+use App\Helpers\RedisHelper;
 use App\Methods\Health;
 use App\Middleware\Guard;
 use Dotenv\Dotenv;
@@ -41,6 +42,8 @@ $redisConnection = $redisFactory->createLazyClient(
         ? sprintf("redis://%s:%s", $REDIS_HOST, $REDIS_PORT)
         : sprintf("redis://%s:%s?password=%s", $REDIS_HOST, $REDIS_PORT, $REDIS_PASS)
 );
+
+$redisHelper = new RedisHelper($redisConnection);
 
 // Basic Redis
 $redisServer = new Redis();
