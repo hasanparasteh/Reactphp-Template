@@ -20,7 +20,7 @@ final class JsonResponse
         return self::response(200, $data);
     }
 
-    public static function internalServerError($error): Response
+    public static function internalServerError($error = 'Internal Error'): Response
     {
         return self::response(500, ['result' => false, 'error' => self::errorFormatter($error)]);
     }
@@ -37,7 +37,7 @@ final class JsonResponse
 
     public static function limitExceed(): Response
     {
-        return self::response(429, ['result' => false, 'error' => self::errorFormatter("To Many Requests")]);
+        return self::response(429, ['result' => false, 'error' => self::errorFormatter("Too Many Requests")]);
     }
 
     public static function alreadyDone($error): Response
@@ -55,9 +55,19 @@ final class JsonResponse
         return self::response(401, ['result' => false, 'error' => self::errorFormatter($error)]);
     }
 
+    public static function forbidden($error): Response
+    {
+        return self::response(403, ['result' => false, 'error' => self::errorFormatter($error)]);
+    }
+
     public static function notAllowed($error): Response
     {
         return self::response(405, ['result' => false, 'error' => self::errorFormatter($error)]);
+    }
+
+    public static function preconditionFailed($error): Response
+    {
+        return self::response(412, ['result' => false, 'error' => self::errorFormatter($error)]);
     }
 
     public static function permanentRedirect($link): Response
@@ -65,8 +75,9 @@ final class JsonResponse
         return new Response(301, ['Location' => $link]);
     }
 
-    private static function errorFormatter($error): ?string
+    private static function errorFormatter($error)
     {
+        if (is_array($error)) return $error;
         if (is_null($error)) return null;
 
         $error = str_replace("   ", " ", $error);

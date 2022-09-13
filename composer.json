@@ -8,7 +8,7 @@
     "vlucas/phpdotenv": "^5.4.1",
     "firebase/php-jwt": "^6.3.0",
     "clue/redis-react": "^2.6.0",
-    "nikolaposa/rate-limit": "^3.0.0",
+    "nikolaposa/rate-limit": "^2.2.0",
     "ext-redis": "*",
     "ext-json": "*",
     "ext-curl": "*",

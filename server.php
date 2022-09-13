@@ -4,7 +4,9 @@
 use App\Core\ErrorHandler;
 use App\Core\JsonRequestDecoder;
 use App\Core\Router;
+use App\Helpers\JwtHelper;
 use App\Methods\Health;
+use App\Middleware\Guard;
 use Dotenv\Dotenv;
 use FastRoute\DataGenerator\GroupCountBased;
 use FastRoute\RouteCollector;
@@ -46,6 +48,11 @@ $redisServer->connect($REDIS_HOST, $REDIS_PORT);
 if (!empty($REDIS_PASS))
     $redisServer->auth(['pass' => $REDIS_PASS]);
 
+
+$jwtHelper = new JwtHelper($_ENV['JWT_KEY']);
+
+$guard = new Guard($jwtHelper);
+
 // Factories
 $databaseFactory = new Factory($loop);
 
@@ -68,6 +75,7 @@ $routes = new RouteCollector(new Std(), new GroupCountBased());
 
 // Health Check
 $routes->get("/", new Health());
+$routes->get("/protected", $guard->protect(new Health()));
 
 // Run Server
 $server = new HttpServer(
